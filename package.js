@@ -1,52 +1,24 @@
 Package.describe({
   name: 'momo:scheduler-with-ext',
-  version: '0.0.3',
+  version: '0.0.1',
   // Brief, one-line summary of the package.
-  summary: 'dhtmlxScheduler is an event calendar that allows adding a Google-like scheduler on a web page.',
+  summary: '',
   // URL to the Git repository containing the source code for this package.
-  git: "https://github.com/DHTMLX/meteor-scheduler.git",
+  git: '',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.2');
-    api.addFiles(
-	[
-	    "dhtmlx_scheduler/codebase/sources/dhtmlxscheduler.js",
-	    "dhtmlx_scheduler/codebase/dhtmlxscheduler.css",
-		"dhtmlx_scheduler/codebase/ext/dhtmlxscheduler_collision.js"
-		"dhtmlx_scheduler/codebase/ext/dhtmlxscheduler_readonly.js"
-		"dhtmlx_scheduler/codebase/ext/dhtmlxscheduler_recurring.js"
-		"dhtmlx_scheduler/codebase/ext/dhtmlxscheduler_minical.js"
-	],
-	"client"
-    );
-
-    var imagesFolder = "dhtmlx_scheduler/codebase/";
-    api.addFiles(getFilesFromFolder(imagesFolder + "imgs"), "client");
-    api.addFiles(getFilesFromFolder(imagesFolder + "imgs_dhx_terrace"), "client");
-    api.addFiles(getFilesFromFolder(imagesFolder + "imgs_flat"), "client");
-    api.addFiles(getFilesFromFolder(imagesFolder + "imgs_glossy"), "client");
-    api.export("scheduler", "client");
+  api.versionsFrom('1.4.2.3');
+  api.use('ecmascript');
+  api.mainModule('scheduler-with-ext.js');
 });
 
 Package.onTest(function(api) {
+  api.use('ecmascript');
   api.use('tinytest');
-  api.use('dhtmlx:scheduler');
-  api.addFiles('scheduler-tests.js');
+  api.use('momo:scheduler-with-ext');
+  api.mainModule('scheduler-with-ext-tests.js');
 });
-
-function getFilesFromFolder(folder) {
-    var fs = Npm.require("fs"),
-        path = Npm.require("path");
-
-    var fullPathToFolder = path.resolve(".", folder),
-        files = fs.readdirSync(fullPathToFolder);
-
-    for(var key in files)
-        files[key] = folder + path.sep + files[key];
-
-    return files;
-}
